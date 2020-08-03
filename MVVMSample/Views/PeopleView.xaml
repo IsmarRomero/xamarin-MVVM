@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MVVMSample.Views.PeopleView">
+    <StackLayout>
+        <SearchBar Placeholder="Find Person"
+                   x:Name="search"
+                   
+                   SearchCommandParameter="{Binding Source={x:Reference search}, Path=Text}"
+                   SearchCommand="{Binding SearchCommand}"/>
+    <ListView ItemsSource="{Binding People}"
+              SelectedItem="{Binding SelectedPerson, Mode=TwoWay}">
+        <ListView.Behaviors>
+            <behaviorsPack:EventToCommandBehavior
+                Command="{Binding ItemTappedCommand}"
+                EventArgsPropertyPath="Item"
+                EventName="ItemTapped"/>
+        </ListView.Behaviors>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Label Text="{Binding Name}"/>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+    </StackLayout>
+</ContentPage>

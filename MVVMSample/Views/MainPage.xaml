@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             Visual="Material"
+             xmlns:project="clr-namespace:MVVMSample.Models"
+             xmlns:converters="clr-namespace:MVVMSample.ValueConverters"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MVVMSample.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PhoneValidatorConverter x:Key="phoneValidator"/>
+            <converters:MoneyConverter x:Key="moneyValidator"/>
+            <project:Person x:Key="person" Name="Cristina" Address="sdsd"></project:Person>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+              <Entry Text="{Binding CurrentPerson.Name}" Placeholder="Your name" HorizontalOptions="FillAndExpand"/>
+      <!--<Entry x:Name="txtName"
+
+             Text="{Binding Name, Source={StaticResource person}}" Placeholder="Your name" HorizontalOptions="FillAndExpand"/>-->
+      <Entry Text="{Binding CurrentPerson.Phone}" Placeholder="Your phone" HorizontalOptions="FillAndExpand"/>
+      <Entry Text="{Binding CurrentPerson.Address}" Placeholder="Your address" HorizontalOptions="FillAndExpand"/>
+        <Entry Placeholder="Your Genre"
+               HorizontalOptions="FillAndExpand"
+               Text="{Binding CurrentPerson.Genre}"
+               BackgroundColor="Gray">
+             <Entry.Triggers>
+                 <DataTrigger TargetType="Entry"
+                              Binding="{Binding CurrentPerson.Genre}"
+                              Value="Female">
+                     <Setter Property="BackgroundColor"
+                             Value="Pink"/>
+                 </DataTrigger>
+                  <DataTrigger TargetType="Entry"
+                              Binding="{Binding CurrentPerson.Genre}"
+                              Value="Male">
+                     <Setter Property="BackgroundColor"
+                             Value="Navy"/>
+                 </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+        <Entry Placeholder="Your Phone"
+               HorizontalOptions="FillAndExpand"
+               Text="{Binding CurrentPerson.Phone}"
+               BackgroundColor="{Binding CurrentPerson.Phone, Converter={StaticResource phoneValidator}}"/> 
+        <Entry Placeholder="Your Salary"
+               HorizontalOptions="FillAndExpand"
+               Text="{Binding CurrentPerson.Salary, Converter={StaticResource moneyValidator}}"/>
+
+        <Button Text="Save Data" Command="{Binding SaveCommand}"/>
+    </StackLayout>
+</ContentPage>
